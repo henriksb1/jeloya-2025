@@ -19,6 +19,14 @@ export class PoisonVialGame extends Phaser.Game {
 
 // start the game
 window.onload = () => {
+	const socket = new WebSocket('ws://10.168.74.112:8765');
+
+	socket.onopen = (event) => {
+		console.log("Here's some text that the server is urgently awaiting!");
+	  };
+	  
+
+
 	const game = new PoisonVialGame(gameConfig);
 
 	// set up stats
