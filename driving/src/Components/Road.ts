@@ -126,8 +126,8 @@ export class Road {
 		const negated = Math.random() - 0.5 > 0;
 
 		let type = 'radio';
-		let scale = 20000;
-		this.addProp(this.scene, 50, type, 3, 0, scale, false);
+		let scale = 32000;
+		this.addProp(this.scene, 50, type, 4.5, 0, scale, true, false);
 	}
 
 	public createRullestein(): void {
