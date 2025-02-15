@@ -8,7 +8,7 @@ async def send_data(websocket):
     while True:
         data = "Hello from Python!"
         await websocket.send(data)
-        await asyncio.sleep(1)
+        await asyncio.sleep(1/50)
 
 
 async def main():
