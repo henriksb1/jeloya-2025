@@ -98,6 +98,7 @@ export class Road {
 		this.createRandomProps();
 		// this.createTurnSigns();
 		this.createBuilding();
+		this.createRullestein();
 	}
 
 	public addProp(scene: GameScene, segmentIndex: number, name: string, offset: number, height: number = 0, scale: number = 3000, flipX: boolean = false, collides: boolean = false): boolean {
@@ -129,6 +130,13 @@ export class Road {
 		this.addProp(this.scene, 50, type, 3, 0, scale, false);
 	}
 
+	public createRullestein(): void {
+
+		let type = 'boulder2';
+		let scale = 8000;
+		this.addProp(this.scene, 750, type, 1, 0, scale, true, true);
+	}
+
 	// add some road side props
 	// offsets <-1 & >1 are outside of the road
 	public createRandomProps(): void {
@@ -143,10 +151,10 @@ export class Road {
 					type = 'boulder1';
 					scale = 1500;
 					break;
-				case 2:
-					type = 'boulder2';
-					scale = 2000;
-					break;
+				// case 2:
+				// 	type = 'boulder2';
+				// 	scale = 2000;
+				// 	break;
 				case 3:
 					type = 'tree1';
 					scale = 3000;
