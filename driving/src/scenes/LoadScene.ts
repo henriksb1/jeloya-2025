@@ -23,8 +23,8 @@ export class LoadScene extends BaseScene {
 			progress.destroy();
 		});
 
-		this.load.image('clouds1', './assets/clouds.png');
-		this.load.image('clouds2', './assets/clouds2.png');
+		this.load.image('clouds1', './assets/cloud.png');
+		this.load.image('clouds2', './assets/cloud2.png');
 		this.load.image('mountain', './assets/sky.jpg');
 		this.load.image('hills', './assets/hills.png');
 		this.load.image('boulder1', './assets/boulder.png');
@@ -36,13 +36,14 @@ export class LoadScene extends BaseScene {
 
 		this.load.spritesheet('particles', './assets/smoke-particle.png', { frameWidth: 16, frameHeight: 16 });
 
-		this.load.spritesheet('car-green', './assets/car-green.png', { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('car-army', './assets/car-army.png', { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('car-red', './assets/car-red.png', { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('car-yellow', './assets/car-yellow.png', { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('car-blue', './assets/car-blue.png', { frameWidth: 64, frameHeight: 64 });
+		const scaleFactor = 2;
+		this.load.spritesheet('car-green', './assets/car-green.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
+		this.load.spritesheet('car-army', './assets/car-army.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
+		this.load.spritesheet('car-red', './assets/car-red.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
+		this.load.spritesheet('car-yellow', './assets/car-yellow.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
+		this.load.spritesheet('car-blue', './assets/car-blue.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
 
-		this.load.binary('playercar', './assets/3d/rock.glb');
+		this.load.binary('playercar', './assets/3d/car.glb');
 
 		this.load.audio('engine', ['./assets/sound/engine-loop.wav']);
 		this.load.audio('tire-squeal', ['./assets/sound/tire-squeal.wav']);

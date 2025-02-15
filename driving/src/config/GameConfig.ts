@@ -9,8 +9,10 @@ export const gameConfig: GameConfig = {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		// width: 320,
 		// height: 180,
-		width: document.querySelector('html').clientWidth,
-		height: document.querySelector('html').clientHeight,
+		width: 640,
+		height: 360,
+		// width: document.querySelector('html').clientWidth,
+		// height: document.querySelector('html').clientHeight,
 	},
 	render: {
 		pixelArt: true,

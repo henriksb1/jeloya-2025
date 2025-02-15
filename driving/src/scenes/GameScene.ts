@@ -71,8 +71,8 @@ export class GameScene extends BaseScene {
 
 		// 2016 × 1512
 		this.sky = this.add.rectangle(-10, -20, gameWidth + 20, gameHeight + 30, Colors.SKY.color).setOrigin(0).setZ(0).setDepth(0);
-		this.clouds2 = this.add.tileSprite(-10, 10, gameWidth + 20, 64, 'clouds1').setOrigin(0).setZ(3).setDepth(1);
-		this.clouds3 = this.add.tileSprite(-10, 20, gameWidth + 20, 64, 'clouds2').setOrigin(0).setZ(4).setDepth(2);
+		this.clouds2 = this.add.tileSprite(-10, 10, gameWidth + 20, 200, 'clouds1').setOrigin(0).setZ(3).setDepth(1);
+		this.clouds3 = this.add.tileSprite(-10, 20, gameWidth + 20, 200, 'clouds2').setOrigin(0).setZ(4).setDepth(2);
 		this.mountains = this.add.tileSprite(-10, -50, 2016, 1512, 'mountain').setOrigin(0).setZ(3).setDepth(3);
 		this.clouds1 = this.add.tileSprite(-10, 0, gameWidth + 20, 64, 'clouds1').setOrigin(0).setZ(2).setDepth(4);
 
