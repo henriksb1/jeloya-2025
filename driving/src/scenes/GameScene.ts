@@ -32,11 +32,32 @@ export class GameScene extends BaseScene {
 
 	public cursors: Input.Keyboard.CursorKeys;
 
+	public socket: WebSocket;
+
 	constructor(key: string, options: any) {
 		super('GameScene');
 	}
 
 	public create(): void {
+		// socket connection
+		this.socket = new WebSocket('ws://10.168.74.112:8765');
+		
+		this.socket.onopen = function(event) {
+			console.log('Connected to WebSocket server.');
+		};
+	
+		
+	
+		this.socket.onclose = function(event) {
+			console.log('Disconnected from WebSocket server.');
+		};
+	
+		this.socket.onerror = function(error) {
+			console.log('WebSocket error: ' + error);
+		};
+
+
+		// game scene
 		this.scene.launch('RaceUiScene', this);
 
 		const gameWidth = this.scale.gameSize.width;
@@ -79,7 +100,8 @@ export class GameScene extends BaseScene {
 		const speedMultiplier = this.player.speed / gameSettings.maxSpeed;
 		const dx = this.player.speed <= 0 ? 0 : dlt * speedMultiplier;
 
-		this.handleInput(delta, playerSegment);
+		this.handleBrainInput(delta, playerSegment);
+		// this.handleInput(delta, playerSegment);
 
 		this.player.y = Util.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
 		this.player.x = this.player.x - (dx * speedMultiplier * playerSegment.curve * gameSettings.centrifugal);
@@ -176,6 +198,28 @@ export class GameScene extends BaseScene {
 		this.mountains.tilePositionX += offset * this.mountains.z;
 		this.hills.tilePositionX += offset * this.hills.z;
 		this.hills.setY(this.hillsBaseY - this.player.pitch * 20);
+	}
+
+	private handleBrainInput(delta: number, playerSegment: TrackSegment) {
+		const dlt = delta * 0.01;
+		this.socket.onmessage = (event) => {
+			const message = JSON.parse(event.data);
+			console.log('Received BRAIN DATA: ' + message.attention);
+
+			// OBS: attention is a string value
+			if (message.attention != 0) {
+				console.log('CAR SHOULD ACCELERATE');
+				this.player.speed = Util.accelerate(this.player.speed, Util.interpolate(gameSettings.accel, 0, Util.percentRemaining(this.player.speed, gameSettings.maxSpeed) ), dlt);
+				this.player.accelerating = true;
+			}
+
+			// OBS: blink is a string value
+			if (message.blink != 0) {
+				console.log('CAR SHOULD TURN RIGHT');
+				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
+				this.cameraAngle -= dlt;
+			}
+		};
 	}
 
 	private handleInput(delta: number, playerSegment: TrackSegment) {
