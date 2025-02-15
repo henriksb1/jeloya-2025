@@ -6,7 +6,7 @@ class GameSettings {
 	public lanes = 3;
 	public fieldOfView = 110;
 	public cameraHeight = 2000;
-	public cameraDepth = 1 / Math.tan( (this.fieldOfView / 2) * Math.PI / 180 );
+	public cameraDepth = 1 / Math.tan(((this.fieldOfView / 2) * Math.PI) / 180);
 	public projectYCompensation = 30;
 	public drawDistance = 500;
 	public fogDensity = 5;
@@ -22,7 +22,7 @@ class GameSettings {
 	public maxTurn = 1;
 	public turnResetMultiplier = 0.1;
 	public cameraAngleResetMultiplier = 0.07;
-	public totalCars = 30;
+	public totalCars = 50;
 }
 
 export const gameSettings = new GameSettings();
