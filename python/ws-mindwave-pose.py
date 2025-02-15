@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 import json
+import multiprocessing
 import sys
 
 import cv2
@@ -22,20 +23,21 @@ async def register(websocket):
         clients.remove(websocket)
 
 
-full_msg = {}
+multi_manager = multiprocessing.Manager()
+direction_value = multi_manager.Value('direction', 0.5)
 
 
 async def broadcast(message):
-    full_msg.update(**message)
     if clients:  # Only send if there are connected clients
         # Create tasks for each client to send the message
+        value = json.dumps(message)
         await asyncio.gather(
-            *[client.send(json.dumps(full_msg)) for client in clients],
+            *[client.send(value) for client in clients],
             return_exceptions=True
         )
 
 
-async def mindwave_reader():
+async def mindwave_reader(direction_value: multiprocessing.Value):
     input("Open serial port, then press ENTER to start")
     print('Connecting to Mindwave...')
     headset = mindwave.Headset('/dev/rfcomm0')
@@ -43,6 +45,7 @@ async def mindwave_reader():
     print('Connected, start data stream')
 
     while True:
+        print(direction_value, direction_value.value)
         try:
             ts = datetime.datetime.now(datetime.UTC).isoformat()
 
@@ -59,6 +62,7 @@ async def mindwave_reader():
                 'meditation': headset.meditation,
                 'blink': headset.blink,
                 'waves': headset.waves,
+                'direction': direction_value.value,
             }
 
             # Broadcast to all connected clients
@@ -72,7 +76,7 @@ async def mindwave_reader():
             await asyncio.sleep(1)
 
 
-async def pose_reader():
+def pose_reader(direction_value: multiprocessing.Value):
     from python.pose import detect
     print("Starting camera...")
     cap = cv2.VideoCapture(0)
@@ -83,7 +87,6 @@ async def pose_reader():
 
     try:
         while True:
-            await asyncio.sleep(.01)
             ret, frame = cap.read()
             if not ret:
                 print("Can't receive frame")
@@ -104,7 +107,8 @@ async def pose_reader():
             person_center_x = (r - l) / 2 + l
             direction = person_center_x / width
             print(direction)
-            await broadcast({'direction': direction})
+            print(direction_value, direction_value.value)
+            direction_value.value = direction
 
             # cv2.imshow('Webcam', cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
             # if cv2.waitKey(1) == ord('q'):
@@ -122,20 +126,20 @@ async def main():
         print("WebSocket server started on ws://0.0.0.0:8765")
 
         # Start mindwave reader task
-        mindwave_task = asyncio.create_task(mindwave_reader())
-        pose_task = asyncio.create_task(pose_reader())
+        mindwave_task = asyncio.create_task(mindwave_reader(direction_value))
+        p = multiprocessing.Process(target=pose_reader, args=(direction_value,))
+        p.start()
 
         # Run forever
         try:
             await asyncio.Future()
         except asyncio.CancelledError:
             mindwave_task.cancel()
-            pose_task.cancel()
             try:
                 await mindwave_task
-                await pose_task
             except asyncio.CancelledError as e:
                 print(e, file=sys.stderr)
+        p.terminate()
 
 
 if __name__ == "__main__":

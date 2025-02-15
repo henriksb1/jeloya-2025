@@ -41,6 +41,7 @@
             <div><span style="color: magenta">■</span> High Beta</div>
             <div><span style="color: brown">■</span> Low Gamma</div>
             <div><span style="color: lime">■</span> Mid Gamma</div>
+            <div><span style="color: blueviolet">■</span> Direction</div>
         </div>
 
         <script>
@@ -112,6 +113,7 @@
                 draw(x, "magenta", msg.waves["high-beta"], 500000);
                 draw(x, "brown", msg.waves["low-gamma"], 500000);
                 draw(x, "lime", msg.waves["mid-gamma"], 500000);
+                draw(x, "blueviolet", msg.direction, 1);
             };
 
             socket.onclose = function (event) {
