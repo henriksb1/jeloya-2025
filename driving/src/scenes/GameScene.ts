@@ -204,21 +204,29 @@ export class GameScene extends BaseScene {
 		const dlt = delta * 0.01;
 		this.socket.onmessage = (event) => {
 			const message = JSON.parse(event.data);
+			
+			// SPEED
 			console.log('Received BRAIN DATA: ' + message.attention);
-
-			// OBS: attention is a string value
-			if (message.attention != 0) {
-				console.log('CAR SHOULD ACCELERATE');
-				this.player.speed = Util.accelerate(this.player.speed, Util.interpolate(gameSettings.accel, 0, Util.percentRemaining(this.player.speed, gameSettings.maxSpeed) ), dlt);
-				this.player.accelerating = true;
-			}
-
-			// OBS: blink is a string value
-			if (message.blink != 0) {
-				console.log('CAR SHOULD TURN RIGHT');
+			const power = message.attention as number; 			
+			this.player.speed = power * 10; // Util.accelerate(this.player.speed, Util.interpolate(gameSettings.accel, 0, Util.percentRemaining(this.player.speed, gameSettings.maxSpeed) ), dlt);
+			this.player.accelerating = true;
+			
+			if (message.blink) {
+				console.log('BLINK! TURN RIGHT');
 				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle -= dlt;
 			}
+
+			// Turn right:
+			if (power < 20 ) {
+				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
+				this.cameraAngle -= dlt;
+			// Turn left:
+			} else if (power > 80) {
+				this.player.turn -= dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
+				this.cameraAngle += dlt;
+			}
+			
 		};
 	}
 
