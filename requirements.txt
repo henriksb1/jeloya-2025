@@ -1,0 +1,11 @@
+numpy==2.2.3
+pandas==2.2.3
+pymindwave2==1.0.1
+pyserial==3.5
+PyYAML==6.0.2
+setuptools==75.8.0
+websockets==14.2
+torch
+transformers
+pillow
+opencv-python
