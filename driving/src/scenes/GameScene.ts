@@ -102,7 +102,7 @@ export class GameScene extends BaseScene {
 		const dx = this.player.speed <= 0 ? 0 : dlt * speedMultiplier;
 
 		this.handleBrainInput(delta, playerSegment);
-		this.handleInput(delta, playerSegment);
+		// this.handleInput(delta, playerSegment);
 
 		this.player.y = Util.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
 		this.player.x = this.player.x - (dx * speedMultiplier * playerSegment.curve * gameSettings.centrifugal);
@@ -212,18 +212,18 @@ export class GameScene extends BaseScene {
 			this.player.speed = 40 * 10;
 			this.player.accelerating = true;
 			
-			if (message.blink) {
-				console.log('BLINK! TURN RIGHT');
-				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
-				this.cameraAngle -= dlt;
-			}
+			// if (message.blink) {
+			// 	console.log('BLINK! TURN RIGHT');
+			// 	this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
+			// 	this.cameraAngle -= dlt;
+			// }
 
 			// Turn right:
-			if (message.attention < 20 ) {
+			if (message.direction < 0.40 ) {
 				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle -= dlt;
 			// Turn left:
-			} else if (message.attention > 40) {
+			} else if (message.direction > 0.60) {
 				this.player.turn -= dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle += dlt;
 			} else {
