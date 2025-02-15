@@ -25,13 +25,13 @@ export class LoadScene extends BaseScene {
 
 		this.load.image('clouds1', './assets/clouds.png');
 		this.load.image('clouds2', './assets/clouds2.png');
-		this.load.image('mountain', './assets/mountain.png');
+		this.load.image('mountain', './assets/sky.jpg');
 		this.load.image('hills', './assets/hills.png');
 		this.load.image('boulder1', './assets/boulder.png');
 		this.load.image('boulder2', './assets/boulder2.png');
 		this.load.image('tree1', './assets/tree.png');
-		this.load.image('tree2', './assets/tree2.png');
-		this.load.image('tree3', './assets/tree3.png');
+		this.load.image('radio', './assets/radio.png');
+		this.load.image('tree3', './assets/skilt.png');
 		this.load.image('turnsign', './assets/turn-sign.png');
 
 		this.load.spritesheet('particles', './assets/smoke-particle.png', { frameWidth: 16, frameHeight: 16 });

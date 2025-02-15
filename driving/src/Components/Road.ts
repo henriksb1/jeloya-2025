@@ -97,6 +97,7 @@ export class Road {
 
 		this.createRandomProps();
 		// this.createTurnSigns();
+		this.createBuilding();
 	}
 
 	public addProp(scene: GameScene, segmentIndex: number, name: string, offset: number, height: number = 0, scale: number = 3000, flipX: boolean = false, collides: boolean = false): boolean {
@@ -119,10 +120,19 @@ export class Road {
 		});
 	}
 
+	public createBuilding(): void {
+		const offset = Phaser.Math.FloatBetween(1.75, 10);
+		const negated = Math.random() - 0.5 > 0;
+
+		let type = 'radio';
+		let scale = 20000;
+		this.addProp(this.scene, 50, type, 3, 0, scale, false);
+	}
+
 	// add some road side props
 	// offsets <-1 & >1 are outside of the road
 	public createRandomProps(): void {
-		for (let n = 0; n < this.segments.length; n += Phaser.Math.Between(1, 5)) {
+		for (let n = 50; n < this.segments.length +50; n += Phaser.Math.Between(1, 5)) {
 			const offset = Phaser.Math.FloatBetween(1.75, 10);
 			const negated = Math.random() - 0.5 > 0;
 

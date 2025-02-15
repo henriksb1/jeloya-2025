@@ -69,10 +69,11 @@ export class GameScene extends BaseScene {
 		this.road = new Road(this);
 		this.carManager = new CarManager(this, this.road);
 
+		// 2016 × 1512
 		this.sky = this.add.rectangle(-10, -20, gameWidth + 20, gameHeight + 30, Colors.SKY.color).setOrigin(0).setZ(0).setDepth(0);
 		this.clouds2 = this.add.tileSprite(-10, 10, gameWidth + 20, 64, 'clouds1').setOrigin(0).setZ(3).setDepth(1);
 		this.clouds3 = this.add.tileSprite(-10, 20, gameWidth + 20, 64, 'clouds2').setOrigin(0).setZ(4).setDepth(2);
-		this.mountains = this.add.tileSprite(-10, gameHeight / 2 - 85, gameWidth + 20, 128, 'mountain').setOrigin(0).setZ(3).setDepth(3);
+		this.mountains = this.add.tileSprite(-10, -50, 2016, 1512, 'mountain').setOrigin(0).setZ(3).setDepth(3);
 		this.clouds1 = this.add.tileSprite(-10, 0, gameWidth + 20, 64, 'clouds1').setOrigin(0).setZ(2).setDepth(4);
 
 		this.hillsBaseY = gameHeight / 2 - 40;
