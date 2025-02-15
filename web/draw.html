@@ -18,6 +18,31 @@
     </head>
     <body>
         <canvas id="canvas"></canvas>
+        <div
+            style="
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                font-size: 10px;
+                background: rgba(225, 225, 225, 0.8);
+                padding: 10px;
+                border-radius: 5px;
+            "
+        >
+            <div><span style="color: red">■</span> Attention</div>
+            <div><span style="color: blue">■</span> Meditation</div>
+            <div><span style="color: green">■</span> Poor Signal</div>
+            <div><span style="color: purple">■</span> Delta</div>
+            <div><span style="color: #ff4500">■</span> Theta</div>
+            <div><span style="color: black">■</span> Raw Value</div>
+            <div><span style="color: yellow">■</span> Low Alpha</div>
+            <div><span style="color: skyblue">■</span> High Alpha</div>
+            <div><span style="color: cyan">■</span> Low Beta</div>
+            <div><span style="color: magenta">■</span> High Beta</div>
+            <div><span style="color: brown">■</span> Low Gamma</div>
+            <div><span style="color: lime">■</span> Mid Gamma</div>
+        </div>
+
         <script>
             const socket = new WebSocket("ws://10.168.74.112:8765");
             let messageCount = 0;
@@ -64,7 +89,13 @@
                     messageCount = 0;
                 }
 
-                ctx.fillStyle = bgColor;
+                // ctx.fillStyle = bgColor; // Make bgColor darker according to poor signal strength
+                const darkness = msg.poor_signal / 255; // Normalize to 0-1
+                const darkenedBg =
+                    bgColor === "white"
+                        ? `rgb(${255 * (1 - darkness)}, ${255 * (1 - darkness)}, ${255 * (1 - darkness)})`
+                        : `rgb(${0 + darkness * 50}, ${0 + darkness * 50}, ${0 + darkness * 50})`;
+                ctx.fillStyle = darkenedBg;
                 ctx.fillRect(x, 0, 1, canvas.height);
                 ctx.fillStyle = barColor;
                 ctx.fillRect(x + 1, 0, 1, canvas.height);
@@ -73,10 +104,10 @@
                 draw(x, medColor, msg.meditation, 100);
                 draw(x, "green", msg.poor_signal, 255);
                 draw(x, "purple", msg.waves.delta, 1000000);
-                draw(x, "orange", msg.waves.theta, 50000);
+                draw(x, "#FF4500", msg.waves.theta, 50000);
                 draw(x, "black", msg.raw_value + 500, 1000);
                 draw(x, "yellow", msg.waves["low-alpha"], 500000);
-                draw(x, "pink", msg.waves["high-alpha"], 500000);
+                draw(x, "skyblue", msg.waves["high-alpha"], 500000);
                 draw(x, "cyan", msg.waves["low-beta"], 500000);
                 draw(x, "magenta", msg.waves["high-beta"], 500000);
                 draw(x, "brown", msg.waves["low-gamma"], 500000);
