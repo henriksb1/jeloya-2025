@@ -31,8 +31,12 @@ export class LoadScene extends BaseScene {
 		this.load.image('boulder2', './assets/rullestein.png');
 		this.load.image('tree1', './assets/tree3.png');
 		this.load.image('tree2', './assets/tree2.png');
-		this.load.image('radio', './assets/radio.png');
+		this.load.image('radio', './assets/radio2.png');
 		this.load.image('tree3', './assets/skilt.png');
+		this.load.image('skulptur', './assets/skulptur.png');
+		this.load.image('art', './assets/art.jpg');
+		this.load.image('rosa', './assets/rosa.png');
+		this.load.image('telefonkiosk', './assets/telefonkiosk.png');
 		this.load.image('turnsign', './assets/turn-sign.png');
 
 		this.load.spritesheet('particles', './assets/smoke-particle.png', { frameWidth: 16, frameHeight: 16 });

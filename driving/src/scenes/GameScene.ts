@@ -122,7 +122,7 @@ export class GameScene extends BaseScene {
 		if (playerSegment.props.size && Math.abs(this.player.x) > 1) {
 			for (const prop of playerSegment.props) {
 				if ( Util.overlapPlayer(this.player, prop) ) {
-					this.player.collide('prop');
+					// this.player.collide('prop');
 					this.player.trackPosition = Util.increase(playerSegment.p1.world.z, -this.player.z, this.road.trackLength);
 					this.player.speed = this.player.speed > 50 ? 50 : this.player.speed;
 				}
@@ -205,11 +205,13 @@ export class GameScene extends BaseScene {
 		const dlt = delta * 0.01;
 		this.socket.onmessage = (event) => {
 			const message = JSON.parse(event.data) as Mindwave;
-			console.log(message);
+			// console.log(message);
 			
 			// SPEED
-			console.log('Received BRAIN DATA: ' + message.attention);		
-			this.player.speed = 40 * 10;
+			// console.log('Received BRAIN DATA: ' + message.attention);		
+			// this.player.speed = 40 * 10;
+			// this.player.accelerating = true;
+			this.player.speed = message.attention * 15; // Util.accelerate(this.player.speed, Util.interpolate(gameSettings.accel, 0, Util.percentRemaining(this.player.speed, gameSettings.maxSpeed) ), dlt);
 			this.player.accelerating = true;
 			
 			// if (message.blink) {
@@ -218,16 +220,19 @@ export class GameScene extends BaseScene {
 			// 	this.cameraAngle -= dlt;
 			// }
 
+			// Turn
+			this.player.turn = -2*(message.direction - 0.5);
+			console.log('message.direction', message.direction);
 			// Turn right:
 			if (message.direction < 0.40 ) {
-				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle -= dlt;
+				console.log('right?');
 			// Turn left:
 			} else if (message.direction > 0.60) {
-				this.player.turn -= dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle += dlt;
+				console.log('left?');
 			} else {
-			this.player.turn = Math.abs(this.player.turn) < 0.01 ? 0 : Util.interpolate(this.player.turn, 0, gameSettings.turnResetMultiplier);
+			//this.player.turn = Math.abs(this.player.turn) < 0.01 ? 0 : Util.interpolate(this.player.turn, 0, gameSettings.turnResetMultiplier);
 			this.cameraAngle = Math.abs(this.cameraAngle) < 0.02 ? 0 : Util.interpolate(this.cameraAngle, 0, gameSettings.cameraAngleResetMultiplier);
 		}
 			

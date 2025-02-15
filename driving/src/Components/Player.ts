@@ -26,7 +26,7 @@ export class Player {
 	public trackPosition: number;
 	public accelerating: boolean = false;
 	public screeching: boolean = false;
-	public collisionRadius: number = 20;
+	public collisionRadius: number = 2;
 	private turnVector: Phaser.Math.Vector3;
 
 	constructor(scene: GameScene, x: number, y: number, z: number, modelKey: string) {

@@ -126,8 +126,8 @@ export class Road {
 		const negated = Math.random() - 0.5 > 0;
 
 		let type = 'radio';
-		let scale = 32000;
-		this.addProp(this.scene, 50, type, 4.5, 0, scale, true, false);
+		let scale = 5000;
+		this.addProp(this.scene, 100, type, 4, 0, scale, false);
 	}
 
 	public createRullestein(): void {
@@ -146,15 +146,15 @@ export class Road {
 
 			let type;
 			let scale = 3000;
-			switch (Phaser.Math.Between(1, 5)) {
+			switch (Phaser.Math.Between(1, 8)) {
 				case 1:
 					type = 'boulder1';
 					scale = 1500;
 					break;
-				// case 2:
-				// 	type = 'boulder2';
-				// 	scale = 2000;
-				// 	break;
+				case 2:
+					type = 'skulptur';
+					scale = 700;
+					break;
 				case 3:
 					type = 'tree1';
 					scale = 3000;
@@ -167,9 +167,21 @@ export class Road {
 					type = 'tree3';
 					scale = 5000;
 					break;
+				case 6:
+					type = 'art';
+					scale = 500;
+					break;
+				case 7:
+					type = 'telefonkiosk';
+					scale = 500;
+					break;
+				case 8:
+					type = 'rosa';
+					scale = 5000;
+					break;
 			}
 
-			this.addProp(this.scene, n, type, negated ? -offset : offset, 0, scale, false);
+			this.addProp(this.scene, n, type, negated ? -offset : offset, 0, scale, false, false);
 		}
 	}
 
