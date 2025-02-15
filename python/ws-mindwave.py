@@ -31,10 +31,11 @@ async def broadcast(message):
 
 
 async def mindwave_reader():
+    input("Open serial port, then press ENTER to start")
     print('Connecting to Mindwave...')
     headset = mindwave.Headset('/dev/rfcomm0')
 
-    print('Connected, waiting for data to start streaming')
+    print('Connected, start data stream')
 
     while True:
         try:
@@ -43,7 +44,6 @@ async def mindwave_reader():
             if headset.poor_signal > 200:
                 print("Poor signal, adjust headset", headset.poor_signal)
                 await asyncio.sleep(1)
-                #continue
 
             # Create data dictionary
             data = {
@@ -52,7 +52,8 @@ async def mindwave_reader():
                 'raw_value': headset.raw_value,
                 'attention': headset.attention,
                 'meditation': headset.meditation,
-                'waves': headset.waves
+                'blink': headset.blink,
+                'waves': headset.waves,
             }
 
             # Convert to JSON string
