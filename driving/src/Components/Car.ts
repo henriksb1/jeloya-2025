@@ -12,7 +12,7 @@ export class Car {
 	public speed: number = 0;
 	public trackPosition: number = 0;
 	public percent: number = 0;
-	public scale: number = 1500;
+	public scale: number = 6000;
 
 	constructor(scene: GameScene, road: Road, offset: number, trackPosition: number, sprite: string, speed: number) {
 		this.scene = scene;
