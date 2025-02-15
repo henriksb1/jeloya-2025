@@ -29,7 +29,7 @@ export class LoadScene extends BaseScene {
 		this.load.image('hills', './assets/hills.png');
 		this.load.image('boulder1', './assets/boulder.png');
 		this.load.image('boulder2', './assets/boulder2.png');
-		this.load.image('tree1', './assets/tree.png');
+		this.load.image('tree1', './assets/tree3.png');
 		this.load.image('radio', './assets/radio.png');
 		this.load.image('tree3', './assets/skilt.png');
 		this.load.image('turnsign', './assets/turn-sign.png');
@@ -43,7 +43,7 @@ export class LoadScene extends BaseScene {
 		this.load.spritesheet('car-yellow', './assets/car-yellow.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
 		this.load.spritesheet('car-blue', './assets/car-blue.png', { frameWidth: 64*scaleFactor, frameHeight: 64*scaleFactor });
 
-		this.load.binary('playercar', './assets/3d/rullestein.glb');
+		this.load.binary('playercar', './assets/3d/car.glb');
 
 		this.load.audio('engine', ['./assets/sound/engine-loop.wav']);
 		this.load.audio('tire-squeal', ['./assets/sound/tire-squeal.wav']);

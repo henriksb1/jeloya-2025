@@ -149,7 +149,7 @@ export class Road {
 					break;
 				case 3:
 					type = 'tree1';
-					scale = 5000;
+					scale = 3000;
 					break;
 				case 4:
 					type = 'tree2';
