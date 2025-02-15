@@ -45,7 +45,6 @@ async def mindwave_reader(direction_value: multiprocessing.Value):
     print('Connected, start data stream')
 
     while True:
-        print(direction_value, direction_value.value)
         try:
             ts = datetime.datetime.now(datetime.UTC).isoformat()
 
@@ -106,8 +105,6 @@ def pose_reader(direction_value: multiprocessing.Value):
             l = best['box'][0]
             person_center_x = (r - l) / 2 + l
             direction = person_center_x / width
-            print(direction)
-            print(direction_value, direction_value.value)
             direction_value.value = direction
 
             # cv2.imshow('Webcam', cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
