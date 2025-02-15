@@ -100,6 +100,7 @@ export class Road {
 		this.createBuilding();
 		this.createFactory();
 		this.createRullestein();
+		this.createFinish();
 	}
 
 	public addProp(scene: GameScene, segmentIndex: number, name: string, offset: number, height: number = 0, scale: number = 3000, flipX: boolean = false, collides: boolean = false): boolean {
@@ -137,7 +138,16 @@ export class Road {
 
 		let type = 'factory';
 		let scale = 5000;
-		this.addProp(this.scene, 200, type, -5, 0, scale, false);
+		this.addProp(this.scene, 1000, type, -5, 0, scale, false);
+	}
+
+	public createFinish(): void {
+		const offset = Phaser.Math.FloatBetween(1.75, 10);
+		const negated = Math.random() - 0.5 > 0;
+
+		let type = 'finish';
+		let scale = 5000;
+		this.addProp(this.scene, 1500, type, 1, 0, scale, false, true);
 	}
 
 	public createRullestein(): void {
@@ -156,7 +166,7 @@ export class Road {
 
 			let type;
 			let scale = 3000;
-			switch (Phaser.Math.Between(1, 8)) {
+			switch (Phaser.Math.Between(1, 12)) {
 				case 1:
 					type = 'boulder1';
 					scale = 1500;
@@ -189,6 +199,7 @@ export class Road {
 					type = 'rosa';
 					scale = 5000;
 					break;
+				default: continue;
 			}
 
 			this.addProp(this.scene, n, type, negated ? -offset : offset, 0, scale, false, false);

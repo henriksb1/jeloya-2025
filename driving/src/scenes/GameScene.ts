@@ -119,7 +119,8 @@ export class GameScene extends BaseScene {
 		}
 
 		// collision check with props if outside of road
-		if (playerSegment.props.size && Math.abs(this.player.x) > 1) {
+		// if (playerSegment.props.size && Math.abs(this.player.x) > 1) {
+		if (playerSegment.props.size && this.player.speed > 20) {
 			for (const prop of playerSegment.props) {
 				if ( Util.overlapPlayer(this.player, prop) ) {
 					// this.player.collide('prop');

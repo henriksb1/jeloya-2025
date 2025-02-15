@@ -37,6 +37,7 @@ export class LoadScene extends BaseScene {
 		this.load.image('skulptur', './assets/skulptur.png');
 		this.load.image('art', './assets/art.jpg');
 		this.load.image('rosa', './assets/rosa.png');
+		this.load.image('finish', './assets/finish.png');
 		this.load.image('telefonkiosk', './assets/telefonkiosk.png');
 		this.load.image('turnsign', './assets/turn-sign.png');
 
