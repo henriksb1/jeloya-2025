@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>WebSocket Example</title>
+        <style>
+            html,
+            body,
+            canvas {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <script>
+            const socket = new WebSocket("ws://10.168.74.112:8765");
+            let messageCount = 0;
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            let bgColor = "white";
+            let barColor = "grey";
+            let attnColor = "red";
+            let medColor = "blue";
+
+            function draw(x, color, value, max) {
+                if (value > max)
+                    console.warn(
+                        color,
+                        "has value",
+                        value,
+                        "which is higher than",
+                        max,
+                    );
+                ctx.fillStyle = color;
+                ctx.fillRect(x, (1 - value / max) * canvas.height, 1, 2);
+            }
+
+            socket.onopen = function (event) {
+                console.log("Connected to WebSocket server.");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            };
+
+            socket.onmessage = function (event) {
+                messageCount++;
+                // console.log('Received data: ' + event.data);
+                const msg = JSON.parse(event.data);
+                if (msg.blink) {
+                    console.log("Blink detected");
+                    bgColor = bgColor === "white" ? "black" : "white";
+                }
+                // console.log('Total messages received: ' + messageCount);
+                const x = messageCount;
+                if (messageCount > canvas.width) {
+                    messageCount = 0;
+                }
+
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(x, 0, 1, canvas.height);
+                ctx.fillStyle = barColor;
+                ctx.fillRect(x + 1, 0, 1, canvas.height);
+
+                draw(x, attnColor, msg.attention, 100);
+                draw(x, medColor, msg.meditation, 100);
+                draw(x, "green", msg.poor_signal, 255);
+                draw(x, "purple", msg.waves.delta, 1000000);
+                draw(x, "orange", msg.waves.theta, 50000);
+                draw(x, "black", msg.raw_value + 500, 1000);
+                draw(x, "yellow", msg.waves["low-alpha"], 500000);
+                draw(x, "pink", msg.waves["high-alpha"], 500000);
+                draw(x, "cyan", msg.waves["low-beta"], 500000);
+                draw(x, "magenta", msg.waves["high-beta"], 500000);
+                draw(x, "brown", msg.waves["low-gamma"], 500000);
+                draw(x, "lime", msg.waves["mid-gamma"], 500000);
+            };
+
+            socket.onclose = function (event) {
+                console.log("Disconnected from WebSocket server.");
+                window.location.reload();
+            };
+
+            socket.onerror = function (error) {
+                console.log("WebSocket error: " + error);
+            };
+        </script>
+    </body>
+</html>
