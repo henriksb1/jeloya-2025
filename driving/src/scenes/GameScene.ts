@@ -101,7 +101,7 @@ export class GameScene extends BaseScene {
 		const dx = this.player.speed <= 0 ? 0 : dlt * speedMultiplier;
 
 		this.handleBrainInput(delta, playerSegment);
-		// this.handleInput(delta, playerSegment);
+		this.handleInput(delta, playerSegment);
 
 		this.player.y = Util.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
 		this.player.x = this.player.x - (dx * speedMultiplier * playerSegment.curve * gameSettings.centrifugal);
@@ -203,12 +203,12 @@ export class GameScene extends BaseScene {
 	private handleBrainInput(delta: number, playerSegment: TrackSegment) {
 		const dlt = delta * 0.01;
 		this.socket.onmessage = (event) => {
-			const message = JSON.parse(event.data);
+			const message = JSON.parse(event.data) as Mindwave;
+			console.log(message);
 			
 			// SPEED
-			console.log('Received BRAIN DATA: ' + message.attention);
-			const power = message.attention as number; 			
-			this.player.speed = power * 10; // Util.accelerate(this.player.speed, Util.interpolate(gameSettings.accel, 0, Util.percentRemaining(this.player.speed, gameSettings.maxSpeed) ), dlt);
+			console.log('Received BRAIN DATA: ' + message.attention);		
+			this.player.speed = 40 * 10;
 			this.player.accelerating = true;
 			
 			if (message.blink) {
@@ -218,14 +218,17 @@ export class GameScene extends BaseScene {
 			}
 
 			// Turn right:
-			if (power < 20 ) {
+			if (message.attention < 20 ) {
 				this.player.turn += dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle -= dlt;
 			// Turn left:
-			} else if (power > 80) {
+			} else if (message.attention > 40) {
 				this.player.turn -= dlt * (Math.abs(playerSegment.curve) > 0.1 ? 0.5 : 0.25);
 				this.cameraAngle += dlt;
-			}
+			} else {
+			this.player.turn = Math.abs(this.player.turn) < 0.01 ? 0 : Util.interpolate(this.player.turn, 0, gameSettings.turnResetMultiplier);
+			this.cameraAngle = Math.abs(this.cameraAngle) < 0.02 ? 0 : Util.interpolate(this.cameraAngle, 0, gameSettings.cameraAngleResetMultiplier);
+		}
 			
 		};
 	}

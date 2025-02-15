@@ -42,7 +42,7 @@ export class LoadScene extends BaseScene {
 		this.load.spritesheet('car-yellow', './assets/car-yellow.png', { frameWidth: 64, frameHeight: 64 });
 		this.load.spritesheet('car-blue', './assets/car-blue.png', { frameWidth: 64, frameHeight: 64 });
 
-		this.load.binary('playercar', './assets/3d/car.glb');
+		this.load.binary('playercar', './assets/3d/rock.glb');
 
 		this.load.audio('engine', ['./assets/sound/engine-loop.wav']);
 		this.load.audio('tire-squeal', ['./assets/sound/tire-squeal.wav']);

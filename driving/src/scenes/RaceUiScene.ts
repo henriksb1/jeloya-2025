@@ -1,6 +1,6 @@
 import { BaseScene } from './BaseScene';
 import { SpeedGauge } from '../Components/SpeedGauge';
-import { TrackRadar } from '../Components/TrackRadar';
+// import { TrackRadar } from '../Components/TrackRadar';
 import { GameScene } from './GameScene';
 
 export class RaceUiScene extends BaseScene {
@@ -8,7 +8,7 @@ export class RaceUiScene extends BaseScene {
 	public timeLargeText: Phaser.GameObjects.BitmapText;
 	public timeSmallText: Phaser.GameObjects.BitmapText;
 	public speedGauge: SpeedGauge;
-	public trackRadar: TrackRadar;
+	// public trackRadar: TrackRadar;
 	public gameScene: GameScene;
 
 	public timer: Phaser.Tweens.Tween;
@@ -24,7 +24,7 @@ export class RaceUiScene extends BaseScene {
 		this.timerText = this.add.bitmapText(this.scale.gameSize.width / 2 + 54, 8, 'impact', 'time', 16).setOrigin(0, 0);
 
 		this.speedGauge = new SpeedGauge(this, 60, 60, 50);
-		this.trackRadar = new TrackRadar(this, this.scale.gameSize.width - 40, 10);
+		// this.trackRadar = new TrackRadar(this, this.scale.gameSize.width - 40, 10);
 
 		this.timer = this.tweens.addCounter({
 			from: 180,
@@ -40,11 +40,11 @@ export class RaceUiScene extends BaseScene {
 		this.timeLargeText.setText(timerValue[0]);
 		this.timeSmallText.setText(timerValue[1]);
 
-		this.trackRadar.update();
-		const radarCars = this.gameScene.getRadarCars(700);
-		for (const car of radarCars) {
-			this.trackRadar.drawCar(car.offset, car.trackPosition - this.gameScene.player.trackPosition);
-		}
+		// this.trackRadar.update();
+		// const radarCars = this.gameScene.getRadarCars(700);
+		// for (const car of radarCars) {
+		// 	this.trackRadar.drawCar(car.offset, car.trackPosition - this.gameScene.player.trackPosition);
+		// }
 	}
 
 	public destroy(): void {
@@ -58,9 +58,9 @@ export class RaceUiScene extends BaseScene {
 					this.speedGauge.speed = data;
 					break;
 
-				case 'playerx':
-					this.trackRadar.updatePlayerX(data);
-					break;
+				// case 'playerx':
+				// 	this.trackRadar.updatePlayerX(data);
+				// 	break;
 
 				default:
 					console.warn('unknown registry change');

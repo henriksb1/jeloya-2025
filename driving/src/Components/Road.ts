@@ -96,7 +96,7 @@ export class Road {
 		this.trackLength = this.segments.length * gameSettings.segmentLength;
 
 		this.createRandomProps();
-		this.createTurnSigns();
+		// this.createTurnSigns();
 	}
 
 	public addProp(scene: GameScene, segmentIndex: number, name: string, offset: number, height: number = 0, scale: number = 3000, flipX: boolean = false, collides: boolean = false): boolean {
