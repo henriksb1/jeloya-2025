@@ -98,6 +98,7 @@ export class Road {
 		this.createRandomProps();
 		// this.createTurnSigns();
 		this.createBuilding();
+		this.createFactory();
 		this.createRullestein();
 	}
 
@@ -128,6 +129,15 @@ export class Road {
 		let type = 'radio';
 		let scale = 5000;
 		this.addProp(this.scene, 100, type, 4, 0, scale, false);
+	}
+
+	public createFactory(): void {
+		const offset = Phaser.Math.FloatBetween(1.75, 10);
+		const negated = Math.random() - 0.5 > 0;
+
+		let type = 'factory';
+		let scale = 5000;
+		this.addProp(this.scene, 200, type, -5, 0, scale, false);
 	}
 
 	public createRullestein(): void {

@@ -26,6 +26,7 @@ export class LoadScene extends BaseScene {
 		this.load.image('clouds1', './assets/cloud.png');
 		this.load.image('clouds2', './assets/cloud2.png');
 		this.load.image('mountain', './assets/sky.jpg');
+		this.load.image('factory', './assets/factory.png');
 		this.load.image('hills', './assets/hills.png');
 		this.load.image('boulder1', './assets/boulder.png');
 		this.load.image('boulder2', './assets/rullestein.png');
