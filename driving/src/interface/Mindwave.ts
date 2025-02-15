@@ -6,6 +6,7 @@ interface Mindwave {
     meditation: number
     blink: number;
     waves: Waves;
+    direction: number;
 }
 
 interface Waves {

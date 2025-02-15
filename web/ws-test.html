@@ -18,10 +18,11 @@
 
         socket.onclose = function(event) {
             console.log('Disconnected from WebSocket server.');
+            setTimeout(window.location.reload, 3000);
         };
 
         socket.onerror = function(error) {
-            console.log('WebSocket error: ' + error);
+            console.log('WebSocket error:', error);
         };
     </script>
 </body>
