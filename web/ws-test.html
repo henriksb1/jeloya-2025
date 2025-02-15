@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <script>
+        const socket = new WebSocket('ws://localhost:8765');
+
+        socket.onopen = function(event) {
+            console.log('Connected to WebSocket server.');
+        };
+
+        socket.onmessage = function(event) {
+            console.log('Received data: ' + event.data);
+        };
+
+        socket.onclose = function(event) {
+            console.log('Disconnected from WebSocket server.');
+        };
+
+        socket.onerror = function(error) {
+            console.log('WebSocket error: ' + error);
+        };
+    </script>
+</body>
+</html>
