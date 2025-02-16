@@ -48,10 +48,6 @@ async def mindwave_reader(direction_value: multiprocessing.Value):
         try:
             ts = datetime.datetime.now(datetime.UTC).isoformat()
 
-            if headset.poor_signal > 200:
-                print("Poor signal, adjust headset", headset.poor_signal)
-                await asyncio.sleep(1)
-
             # Create data dictionary
             data = {
                 'timestamp': ts,
@@ -63,6 +59,11 @@ async def mindwave_reader(direction_value: multiprocessing.Value):
                 'waves': headset.waves,
                 'direction': direction_value.value,
             }
+
+            if headset.poor_signal > 200:
+                print("Poor signal, adjust headset", headset.poor_signal)
+                print(data)
+                await asyncio.sleep(1)
 
             # Broadcast to all connected clients
             await broadcast(data)
